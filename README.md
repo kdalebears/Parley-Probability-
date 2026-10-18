@@ -1,28 +1,20 @@
-# NFL Parlay Probability — first test build
+# NFL Parlay Probability — V1 two-tab build
 
-A mobile-first test app for selecting NFL moneyline teams, computing combined ESPN-derived probabilities, and recording the probability over time.
+A client-side NFL moneyline parlay probability viewer built for GitHub Pages.
 
-## How to test
+## Features
+- Parlay Builder: weekly schedule, per-team ESPN probabilities, combined initial chance, name and save.
+- Saved Parlays: list of each parlay and its latest calculated probability; tap for legs and a smoothed historical line graph.
+- Refreshes ESPN data approximately every 60 seconds while the webpage is visible. All saved parlays in the currently loaded week are recalculated at once.
+- Saves parlays and individual chart histories in the browser's `localStorage`.
+- Deletes saved parlays on or after Tuesday midnight Toronto/Eastern time after their NFL week's last scheduled game. Runs when opening the app and during its periodic timer. Future-week parlays are preserved.
 
-Open `index.html` with a static web server or upload it to a GitHub Pages repo. It fetches ESPN's **unofficial public endpoints** directly from your browser. If ESPN blocks cross-origin (CORS) requests, this version will show an error rather than substitute invented data. A small server-side relay is then required.
+## Deployment
+Upload `index.html` and `README.md` to the root of the existing GitHub repository, replacing the old files. GitHub Pages continues to serve `index.html`; Render is not required for initial testing.
 
-## What's implemented
-- Week selector, games grouped by date, team win probability buttons.
-- One team per matchup, combined parlay probability (independence assumption).
-- Automatic 60-second refresh while app is visible.
-- Smooth history graph (draws visually smooth curves; does not alter underlying observations).
-- Pick selection and recorded history persist in localStorage.
-- Finished games show 100% for the winner and 0% for loser; ties are treated as neither team winning.
-- Missing probabilities clearly shown as unavailable.
-
-## What is unverified
-- Browser CORS access to ESPN on GitHub Pages.
-- Coverage of ESPN `predictor` pregame fields for the current NFL season.
-- ESPN's continued availability, permissions and rate limits.
-- Long-term persistence across browser data clearing or iOS PWA storage eviction.
-
-## Data
-- https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard
-- https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event=EVENT_ID
-
-Unofficial ESPN endpoints, not affiliated with ESPN. This prototype does not place bets or show scores, spreads, totals or American odds.
+## Known limitations
+- ESPN uses unofficial public endpoints; access and field availability aren't guaranteed. Missing probabilities show Unavailable, not invented numbers.
+- Historical readings accrue only while the app is open; closing the browser stops background monitoring.
+- History and parlays are local to the browser/device and aren't synchronized.
+- To show current live data for a saved parlay from another week, switch the builder's week to that week; the app otherwise displays the most recently recorded probability for it.
+- This simplified tool treats legs from distinct games as independent. ESPN win probabilities are estimates, not guaranteed outcomes. A tied game is treated as neither team winning for standard moneyline outcomes; sportsbook house rules can differ.
